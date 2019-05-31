@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="wenba.com.androidtest"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <permission
+        android:name="wenba.com.androidtest.permission.ACCESS_BOOK_SERVICE"
+        android:protectionLevel="normal"/>
+    <permission
+        android:name="wenba.com.androidtest.permission.ACCESS_BOOK_PROVIDER"
+        android:protectionLevel="normal"/>
+
+    <uses-permission android:name="wenba.com.androidtest.permission.ACCESS_BOOK_SERVICE"/>
+    <uses-permission android:name="wenba.com.androidtest.permission.ACCESS_BOOK_PROVIDER"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".TestApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".view.DragViewActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!--<activity android:name=".BookManagerActivity"/>-->
+        <!--<activity-->
+            <!--android:name=".view.DragViewActivity"-->
+            <!--android:configChanges="screenSize|orientation|keyboardHidden"/>-->
+
+        <activity
+            android:name=".remoteview.RemoteTestA"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleInstance"
+            android:process=":remoteview"/>
+
+        <service
+            android:name=".messenger.MessengerService"
+            android:process=":remote"/>
+        <service
+            android:name=".aidl.BookManagerService"
+            android:process=":bms"/>
+
+        <service
+            android:name=".socket.SocketService"
+            android:process=":socket"/>
+
+        <!--provider的authorities是必要的，调用contentresolver解析的时候会作为URI调用指定的Provider-->
+        <provider
+            android:name=".contentprovider.BookProvider"
+            android:authorities="com.wenba.BOOK_PROVIDER"
+            android:permission="wenba.com.androidtest.permission.ACCESS_BOOK_PROVIDER"
+            android:process=":provider"/>
+
+    </application>
+
+</manifest>
